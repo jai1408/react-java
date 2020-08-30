@@ -41,7 +41,7 @@ class GroupList extends Component {
         }
 
         const groupList = groups.map(group => {
-            const address = `${group.address || ''} ${group.city || ''} ${group.stateOrProvince || ','} ${group.country || ''}`;
+            const address = `${group.address || ''} ${group.city || ''} ${group.stateOrProvince || ''}, ${group.country || ''} ${group.postalCode}`;
             console.log(address);
             return <tr key={group.id}>
                 <td style={{ whiteSpace: 'nowrap' }}>{group.name}</td>
