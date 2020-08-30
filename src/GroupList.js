@@ -15,13 +15,13 @@ class GroupList extends Component {
     componentDidMount() {
         this.setState({ isLoading: true });
 
-        fetch('api/groups')
+        fetch('https://user-event-service.cfapps.io/api/groups')
             .then(response => response.json())
             .then(data => this.setState({ groups: data, isLoading: false }));
     }
 
     async remove(id) {
-        await fetch(`/api/group/${id}`, {
+        await fetch(`https://user-event-service.cfapps.io/api/group/${id}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
