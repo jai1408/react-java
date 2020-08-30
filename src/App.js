@@ -7,13 +7,15 @@ import GroupEdit from './GroupEdit';
 
 class App extends Component {
 
-  /*state = {
+  /*
+  ! This commented section is sample code for fetching GET method of URL
+  state = {
     isLoading: true,
     groups: []
   };
 
   async componentDidMount() {
-    const response = await fetch('/api/groups');s
+    const response = await fetch('https://user-event-service.cfapps.io/api/groups');s
     console.log(response);
     const body = await response.json();
     console.log(body);
