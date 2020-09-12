@@ -26,7 +26,7 @@ class GroupEdit extends Component {
 
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
-            const group = await (await fetch(`https://user-event-service.cfapps.io/api/group/${this.props.match.params.id}`)).json();
+            const group = await (await fetch(`https://user-event.herokuapp.com/api/group/${this.props.match.params.id}`)).json();
             this.setState({ item: group });
         }
     }
@@ -44,7 +44,7 @@ class GroupEdit extends Component {
         event.preventDefault();
         const { item } = this.state;
 
-        await fetch('https://user-event-service.cfapps.io/api/group', {
+        await fetch('https://user-event.herokuapp.com/api/group', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -59,7 +59,7 @@ class GroupEdit extends Component {
         event.preventDefault();
         const { item } = this.state;
         const id = item.id;
-        await fetch(`https://user-event-service.cfapps.io/api/group/${id}`, {
+        await fetch(`https://user-event.herokuapp.com/api/group/${id}`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',

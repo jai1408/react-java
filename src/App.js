@@ -15,7 +15,7 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    const response = await fetch('https://user-event-service.cfapps.io/api/groups');s
+    const response = await fetch('https://user-event.herokuapp.com/api/groups');s
     console.log(response);
     const body = await response.json();
     console.log(body);
