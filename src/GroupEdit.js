@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import AppNavbar from './AppNavBar';
+import axiosInstance from './axios/axios';
 
 class GroupEdit extends Component {
 
@@ -26,8 +27,11 @@ class GroupEdit extends Component {
 
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
-            const group = await (await fetch(`https://user-event.herokuapp.com/api/group/${this.props.match.params.id}`)).json();
-            this.setState({ item: group });
+            // const group = await (await fetch(`https://user-event.herokuapp.com/api/group/${this.props.match.params.id}`)).json();
+            axiosInstance.get(`/api/group/${this.props.match.params.id}`).then(res => {
+                const group = res.data;
+                this.setState({ item: group });
+            });
         }
     }
 
@@ -43,7 +47,15 @@ class GroupEdit extends Component {
     async add(event) {
         event.preventDefault();
         const { item } = this.state;
-
+        axiosInstance.post('/api/group', {
+            "name": item.name,
+            "address": item.address,
+            "city": item.city,
+            "stateOrProvince": item.stateOrProvince,
+            "country": item.country,
+            "postalCode": item.postalCode
+        });
+        /*
         await fetch('https://user-event.herokuapp.com/api/group', {
             method: 'POST',
             headers: {
@@ -52,6 +64,7 @@ class GroupEdit extends Component {
             },
             body: JSON.stringify(item),
         });
+        */
         this.props.history.push('/groups');
     }
 
@@ -59,6 +72,16 @@ class GroupEdit extends Component {
         event.preventDefault();
         const { item } = this.state;
         const id = item.id;
+        axiosInstance.put(`/api/group/${id}`, {
+            "id": id,
+            "name": item.name,
+            "address": item.address,
+            "city": item.city,
+            "stateOrProvince": item.stateOrProvince,
+            "country": item.country,
+            "postalCode": item.postalCode
+        });
+        /*
         await fetch(`https://user-event.herokuapp.com/api/group/${id}`, {
             method: 'PUT',
             headers: {
@@ -67,6 +90,7 @@ class GroupEdit extends Component {
             },
             body: JSON.stringify(item),
         });
+        */
         this.props.history.push('/groups');
     }
 

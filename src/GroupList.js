@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, ButtonGroup, Container, Table } from 'reactstrap';
 import AppNavbar from './AppNavBar';
 import { Link } from 'react-router-dom';
+import axiosInstance from './axios/axios';
 
 class GroupList extends Component {
 
@@ -14,14 +15,21 @@ class GroupList extends Component {
 
     componentDidMount() {
         this.setState({ isLoading: true });
+        axiosInstance.get('/api/groups').then(res => {
+            const data = res.data;
+            this.setState({ groups: data, isLoading: false });
+        });
 
+        /*
         fetch('https://user-event.herokuapp.com/api/groups')
             .then(response => response.json())
             .then(data => this.setState({ groups: data, isLoading: false }));
+        */
     }
 
     async remove(id) {
-        await fetch(`https://user-event.herokuapp.com/api/group/${id}`, {
+        /*
+        wait fetch(`https://user-event.herokuapp.com/api/group/${id}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
@@ -31,6 +39,13 @@ class GroupList extends Component {
             let updatedGroups = [...this.state.groups].filter(i => i.id !== id);
             this.setState({ groups: updatedGroups });
         });
+        */
+
+        axiosInstance.delete(`/api/group/${id}`)
+            .then(() => {
+                let updatedGroups = [...this.state.groups].filter(i => i.id !== id);
+                this.setState({ groups: updatedGroups });
+            });
     }
 
     render() {
@@ -42,7 +57,7 @@ class GroupList extends Component {
 
         const groupList = groups.map(group => {
             const address = `${group.address || ''} ${group.city || ''} ${group.stateOrProvince || ''}, ${group.country || ''} ${group.postalCode}`;
-            console.log(address);
+            console.table(address);
             return <tr key={group.id}>
                 <td style={{ whiteSpace: 'nowrap' }}>{group.name}</td>
                 <td>{address}</td>
